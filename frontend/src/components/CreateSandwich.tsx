@@ -1,5 +1,7 @@
 import {ChangeEvent, FormEvent, useState} from "react";
 import {Sandwich} from "../model/Sandwich";
+import {Simulate} from "react-dom/test-utils";
+import change = Simulate.change;
 
 type CreateSandwichProps = {
     addSandwich: (description: Sandwich) => void
@@ -28,7 +30,12 @@ export default function CreateSandwich(props: CreateSandwichProps) {
     * TODO: Aufgabe 2 -> Erstelle eine handleChange(event: ChangeEvent<HTMLInputElement>) Funktion,
     *  die Änderungen an der Form übernimmt und den Sandwich-State aktualisiert
     **/
+function handleSubmit (event: FormEvent<HTMLFormElement>){
+    event.preventDefault()
+    props.addSandwich (sandwich)
 
+
+}
 
     /*
     * TODO: Aufgabe 1 -> Erstelle eine <form> mit der man alle Daten eines Burgers angeben kann
@@ -36,47 +43,51 @@ export default function CreateSandwich(props: CreateSandwichProps) {
 
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
         const fieldName = event.target.name
-        const fieldName = event.target.type
+        const fieldType = event.target.type
+        const fieldValue = fieldType !== "checkbox" ? event.target.value: event.target.checked
+
         setSandwich(prevState => ({
+            ...prevState, [fieldName]: fieldValue
 
-            ...prevState, [fieldName]: fieldName !== event.target.value : event.target.checked
+
         }))
-    }
-
-    function handleSubmit(event: FormEvent<HTMLInputElement>) {
-        event.preventDefault();
-        alert(sandwich)
     }
 
     return (
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
+                id:
                 <input type={"text"}
                        name={"id"}
                        value={sandwich.id}
                        onChange={handleChange}
                 />
-                <input name={"burger"}
+                Name:
+                <input name={"name"}
                        type={"text"}
                        value={sandwich.name}
                        onChange={handleChange}
                 />
-                <input name={"petty"}
+                Patty:
+                <input name={"patty"}
                        type={"text"}
                        value={sandwich.patty}
                        onChange={handleChange}
                 />
-                <input name={"NumberOfPetty"}
+                Number of Patties:
+                <input name={"numberOfPatties"}
                        type={"number"}
                        value={sandwich.numberOfPatties}
                        onChange={handleChange}
                 />
-                <input name={"gegrillt"}
+                Grilled?
+                <input name={"grilled"}
                        type={"checkbox"}
                        checked={sandwich.grilled}
                        onChange={handleChange}
                 />
-                <input name={"Sesambums"}
+                Extra Wishes:
+                <input name={"extraWishes"}
                        type={"text"}
                        value={sandwich.extraWishes}
                        onChange={handleChange}

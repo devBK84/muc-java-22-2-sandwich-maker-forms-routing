@@ -4,6 +4,7 @@ import {Sandwich} from "../model/Sandwich";
 type SandwichDetailsProps = {
     sandwich: Sandwich;
     deleteSandwich: (id: string) => void; // Type ist: Eine Methode, die einen String als Parameter hat und void als return
+
 }
 
 export default function SandwichDetails(props: SandwichDetailsProps) {
